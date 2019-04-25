@@ -13,7 +13,7 @@ def index():
             'body': 'This is a mock up!'
         },
         {
-            'author': {'username': 'Susan'},
+            'author': {'username': 'Name3'},
             'body': 'Any content goes here!'
         }
     ]
