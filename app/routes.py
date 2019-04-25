@@ -3,6 +3,23 @@ from app import app
 from app.forms import LoginForm
 
 
+@app.route('/')
+@app.route('/index')
+def index():
+    user = {'username': 'Name1'}
+    posts = [
+        {
+            'author': {'username': 'Name2'},
+            'body': 'This is a mock up!'
+        },
+        {
+            'author': {'username': 'Susan'},
+            'body': 'Any content goes here!'
+        }
+    ]
+    return render_template('index.html', title='Home', user=user, posts=posts)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
