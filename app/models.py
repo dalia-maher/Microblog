@@ -15,6 +15,19 @@ class User(UserMixin, db.Model):
     image = db.Column(db.String(64))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
+    @property
+    def serialize(self):
+
+        return {
+            'username': self.username,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'id': self.id,
+            'email': self.email,
+            'bio': self.bio,
+            'image': self.image,
+        }
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
@@ -27,15 +40,3 @@ class User(UserMixin, db.Model):
     @login.user_loader
     def load_user(id):
         return User.query.get(int(id))
-
-
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(250))
-    body = db.Column(db.String(140))
-    creation_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    modification_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Post {}>'.format(self.body)
